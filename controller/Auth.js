@@ -58,3 +58,38 @@ exports.signup = async (req, res) => {
     })
   }
 };
+
+
+// login handler
+
+exports.login=async (req,res)=>{
+  try {
+    //fetch data
+    const {email, password}=req.body;
+
+    // Validdaiton on email and password
+    if(!email || !password){
+      return res.status(400).json({
+        success:false,
+        message:"No credentials found in req body, please fill again"
+      })
+    }
+
+    const userExist=await Schema.findOne({email});
+    if(!userExist){
+      return res.status(400).json({
+        success:false,
+        message:"User Not Found"
+      })
+    }
+    
+    // verify password and generate JWT Token
+
+    
+
+
+
+  } catch (error) {
+    
+  }
+}
