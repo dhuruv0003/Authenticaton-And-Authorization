@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const Schema = require("../Model/Schema");
 const jwt=require("jsonwebtoken")
 
+require('dotenv').config();
+
 //signup route
 
 exports.signup = async (req, res) => {
@@ -86,17 +88,25 @@ exports.login = async (req, res) => {
     // since we are using bcrypt so we have to use await keyword along with it
 
     // compare given password with the password of existing user, if true, then server genereate a JWT token 
+
+    const payload={
+      email:userExist.email,
+      id:userExist._id,
+      role:userExist.role
+    }
+
     if (await bcrypt.compare(password, userExist.password)) {
-       
+      //If password match send jwt token to cilent
+      const token=jwt.sign(payload,process.env.JWT_SECRET,{ expiresIn:'2h'} )
 
-
-    } else {
+      
+    } 
+    else {
       //If passowrd does not match
       return res.status(400).josn({
         success:false,
         message:"passowrd does not match"
       })
-
     }
   } catch (error) {
 
