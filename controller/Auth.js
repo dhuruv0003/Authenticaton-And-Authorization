@@ -97,7 +97,7 @@ exports.login = async (req, res) => {
 
     if (await bcrypt.compare(password, userExist.password)) {
       //If password match send jwt token to cilent
-      const token=jwt.sign(payload,process.env.JWT_SECRET,{ expiresIn:'2h'} )
+      const token=jwt .sign(payload,process.env.JWT_SECRET,{ expiresIn:'2h'} )
 
       
     } 
