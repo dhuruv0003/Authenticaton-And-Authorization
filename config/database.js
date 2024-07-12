@@ -11,7 +11,7 @@ exports.dbconnect=()=>{
     .then(()=>{
         console.log("Db connected");
     })
-    .catch(()=>{
+    .catch((err)=>{
         console.log("Error in connection");
         console.error(err);
         process.exit(1);

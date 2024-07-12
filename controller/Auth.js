@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
     try {
       hashedPassword = await bcrypt.hash(password, 10);
     } catch (e) {
-      return res.status(100).json({
+      return res.status(300).json({
         success: false,
         message: "Error in hashing password",
       });
@@ -46,7 +46,8 @@ exports.signup = async (req, res) => {
 
     return res.status(200).json({
         success:true,
-        message:"User created Successfully"
+        message:"User created Successfully",
+        data:user
     })
 
   } catch (e) {
