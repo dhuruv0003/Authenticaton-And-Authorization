@@ -98,8 +98,29 @@ exports.login = async (req, res) => {
     if (await bcrypt.compare(password, userExist.password)) {
       //If password match send jwt token to cilent
       const token=jwt .sign(payload,process.env.JWT_SECRET,{ expiresIn:'2h'} )
-
+      userExist.token=token
+      userExist.password=undefined;
+     
+      // Response.cookie(name: string, val: string, options: CookieOptions): this
       
+      // Set cookie name to val, with the given options.
+      
+      const options={
+        //Now to next 3 days
+        expires:new Date(Date.now()+3*24*60*60*1000),
+        httpOnly:true
+      }
+      return res.cookie("token",token,options).status(202).json({
+        success:true,
+        token:token,
+        data:userExist,
+        message:"User Logged in successfully"
+      })
+
+      // return res.status(200).json({
+      //   success:true,
+      //   message:userExist
+      // })
     } 
     else {
       //If passowrd does not match
@@ -109,6 +130,6 @@ exports.login = async (req, res) => {
       })
     }
   } catch (error) {
-
+console.log(error);
   }
 };
