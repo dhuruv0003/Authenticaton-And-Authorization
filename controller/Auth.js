@@ -9,7 +9,7 @@ const Schema = require("../Model/Schema");
 exports.signup = async (req, res) => {
   try {
     //Step 1 get data
-    const { name, email, password, role } = req.body();
+    const { name, email, password, role } = req.body;
 
     //Step2 check if user already exist in db
     const existingUser = await Schema.findOne({ email });
