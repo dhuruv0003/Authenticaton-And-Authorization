@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
       });
     }
 
-    const userExist = await Schema.findOne({ email });
+    let userExist = await Schema.findOne({ email });
     if (!userExist) {
       return res.status(400).json({
         success: false,
@@ -97,7 +97,9 @@ exports.login = async (req, res) => {
 
     if (await bcrypt.compare(password, userExist.password)) {
       //If password match send jwt token to cilent
-      const token=jwt .sign(payload,process.env.JWT_SECRET,{ expiresIn:'2h'} )
+      const token=jwt.sign(payload,process.env.JWT_SECRET,{ expiresIn:'2h'} )
+      //If we wnat to add new property we use .toObject() function
+      userExist=userExist.toObject();
       userExist.token=token
       userExist.password=undefined;
      
@@ -112,7 +114,7 @@ exports.login = async (req, res) => {
       }
       return res.cookie("token",token,options).status(202).json({
         success:true,
-        token:token,
+        
         data:userExist,
         message:"User Logged in successfully"
       })
