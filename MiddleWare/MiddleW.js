@@ -33,7 +33,7 @@ require('dotenv').config();
     exports.auth=(req,res,next)=>{
         try {
             //extract jwt token(which you have inserted into req.body while login)
-            const token=req.body.token || req.cookie.token
+            const token=req.body.token
             if(!token){
                 return res.status(400).json({
                     sucess:false,
@@ -90,12 +90,12 @@ exports.isStudent=(req,res,next)=>{
     }
 }
 
-exports.isAdmin=(req, res, next)=>{
+exports.isAdmin=(req,res,next)=>{
     try{
-        if(req.user.role!=="Admin"){
-            res.status(400).josn({
+        if(req.user.role !== "Admin"){
+            res.status(400).json({
                 success:false,
-                message:"Role does not match,,This is protected route for Admin"
+                message:"Role does not match,This is protected route for Admin"
             })
         }
         next();
