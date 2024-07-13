@@ -109,12 +109,13 @@ exports.login = async (req, res) => {
       
       const options={
         //Now to next 3 days
-        expires:new Date(Date.now()+3*24*60*60*1000),
+        // expires:new Date(Date.now()+3*24*60*60*1000),
+        expires:new Date(Date.now()+30000),
         httpOnly:true
       }
 
       // when token is stored in cookie, we can use cookie parser. we can leave the body empty dunring postman get call. As token is stored in cookie
-      return res.status(202).json({
+      return res.cookie("token",token,options).status(202).json({
         success:true,
         token,
         userExist,
@@ -123,7 +124,8 @@ exports.login = async (req, res) => {
     // when token is stored in body
       // return res.status(200).json({
       //   success:true,
-      //   message:userExist
+      //   data:userExist,
+      //   token
       // })
     } 
     else {
