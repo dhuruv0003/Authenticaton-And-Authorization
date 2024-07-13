@@ -33,7 +33,10 @@ require('dotenv').config();
     exports.auth=(req,res,next)=>{
         try {
             //extract jwt token(which you have inserted into req.body while login)
-            const token=req.body.token
+            const token=req.body.token || req.cookies.token || req.header("Authorization").replace("Bearer ","")
+
+// to fetch token from header, make entry in header with key=Authorization and value = Bearer <token >
+
             if(!token){
                 return res.status(400).json({
                     sucess:false,

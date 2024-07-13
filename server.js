@@ -6,9 +6,13 @@ require('dotenv').config();
 
 const PORT=process.env.PORT || 4000;
 
-// body parser express.json extracts the uncstrucyired data from the body of request and than convers it inoo structures form .
-
+// body parser express.json extracts the uncstrucired data from the body of request and than convers it into structures form .
 app.use(express.json());
+
+// Cookie-parser:- Extracts the cookie data from the HTTP request and converts it into a usable format that can be accessed by the server-side code
+const cookieParser=require('cookie-parser');
+app.use(cookieParser());
+
 
 require('./config/database').dbconnect();
 
