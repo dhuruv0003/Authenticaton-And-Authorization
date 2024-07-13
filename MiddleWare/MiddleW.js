@@ -32,7 +32,7 @@ require('dotenv').config();
 
     exports.auth=(req,res,next)=>{
         try {
-            //extract jwt token
+            //extract jwt token(which you have inserted into req.body while login)
             const token=req.body.token || req.cookie.token
             if(!token){
                 return res.status(400).json({
@@ -85,7 +85,7 @@ exports.isStudent=(req,res,next)=>{
     } catch (error) {
         return res.status(401).json({
             success:false,
-            message:"user role is not matching"
+            message:"user role is not matching "
         })
     }
 }
@@ -106,3 +106,6 @@ exports.isAdmin=(req, res, next)=>{
         })
     }
 }
+
+
+// Imp Note => isStudent, and isAdmin both middlewares are used for authroization purpose , whereas auth is used for authentication purpose

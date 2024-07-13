@@ -2,13 +2,16 @@ const express=require('express')
 const router=express.Router();
 
 const {signup,login}=require('../controller/Auth');
-const { auth, isStudent, isAdmin } = require('../MiddleWare/MiddleW');
 
 router.post("/signup",signup);
 router.post("/login",login);
 
-//Using middlewaared for testing protetedroutes
 
+
+//          Proteted Routes
+const { auth, isStudent, isAdmin } = require('../MiddleWare/MiddleW');
+
+//Using middleware for testing 
 router.get('/test',auth,(req,res)=>{
     res.json({
         success:true,
@@ -25,7 +28,7 @@ router.get('/student',auth,isStudent,(req,res)=>{
     })
 })
 
-// Protected route for student
+// Protected route for admin
 
 router.get('/admin',auth,isAdmin,(req,res)=>{
     res.json({
