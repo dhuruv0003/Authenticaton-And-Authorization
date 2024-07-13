@@ -33,7 +33,7 @@ require('dotenv').config();
     exports.auth=(req,res,next)=>{
         try {
             //extract jwt token
-            const token=req.body.token || req.cookies.token
+            const token=req.body.token || req.cookie.token
             if(!token){
                 return res.status(400).json({
                     sucess:false,
@@ -41,10 +41,17 @@ require('dotenv').config();
                 })
             }
 
-            //Verify Token jwt.verify(token,secret_key) verify is used to decode the token, Within decode payload object us stored
+            //Verify Token jwt.verify(token,secret_key) verify is used to decode the token, Within decode, payload object us stored
             try{
                 const decode=jwt.verify(token,process.env.JWT_SECRET);
                 console.log(decode);
+                // o/p=> {
+                            // email: 'zsdfdgkkds@kk.com',
+                            // id: '66911527821386a9d7d2698b',
+                            // role: 'Student',
+                            // iat: 1720865369,
+                            // exp: 1720872569
+                        // }
                 // now send the decoded token to request body under user property.
                 req.user=decode;
             }catch(err){
@@ -88,9 +95,10 @@ exports.isAdmin=(req, res, next)=>{
         if(req.user.role!=="Admin"){
             res.status(400).josn({
                 success:false,
-                message:"This is protected route for Admin"
+                message:"Role does not match,,This is protected route for Admin"
             })
         }
+        next();
     }catch(error){
         return res.status(401).json({
             success:false,

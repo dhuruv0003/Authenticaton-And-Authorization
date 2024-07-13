@@ -12,8 +12,8 @@ app.use(express.json());
 
 require('./config/database').dbconnect();
 
-const user=require('./routes/user')
-app.use("/api/v1",user)
+const allroute=require('./routes/route')
+app.use("/api/v1",allroute)
 
 
 app.listen(PORT,()=>{

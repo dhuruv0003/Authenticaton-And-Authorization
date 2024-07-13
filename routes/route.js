@@ -25,7 +25,7 @@ router.get('/student',auth,isStudent,(req,res)=>{
     })
 })
 
-// Proteted route for student
+// Protected route for student
 
 router.get('/admin',auth,isAdmin,(req,res)=>{
     res.json({
